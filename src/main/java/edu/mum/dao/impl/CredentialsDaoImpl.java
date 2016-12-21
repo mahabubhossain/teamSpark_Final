@@ -1,7 +1,5 @@
 package edu.mum.dao.impl;
 
- 
-
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -9,14 +7,12 @@ import org.springframework.stereotype.Repository;
 import edu.mum.dao.CredentialsDao;
 import edu.mum.domain.UserCredentials;
 
-
-@SuppressWarnings("unchecked")
 @Repository
 public class CredentialsDaoImpl extends GenericDaoImpl<UserCredentials> implements CredentialsDao {
 
 	public CredentialsDaoImpl() {
-		super.setDaoType(UserCredentials.class );
-		}
+		super.setDaoType(UserCredentials.class);
+	}
 
 	public UserCredentials findByUserName(String userName) {
 
@@ -29,8 +25,5 @@ public class CredentialsDaoImpl extends GenericDaoImpl<UserCredentials> implemen
 		// TODO Auto-generated method stub
 		Query query = entityManager.createQuery("select authority from authority a  where a.username =:userName");
 		return (String) query.setParameter("userName", userName).getSingleResult();
-		//return null;
 	}
-
- 
- }
+}

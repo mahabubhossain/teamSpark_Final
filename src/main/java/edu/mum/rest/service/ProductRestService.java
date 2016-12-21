@@ -9,10 +9,9 @@ import edu.mum.domain.Product;
 @Component
 public interface ProductRestService {
 
- 	public List<Product> findAll();
+	public List<Product> findAll();
 
 	public Product findOne(Long index);
 
 	public Product save(Product product);
-
 }

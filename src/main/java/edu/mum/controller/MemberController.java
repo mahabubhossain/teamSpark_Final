@@ -1,6 +1,5 @@
 package edu.mum.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,49 +11,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.mum.service.MemberService;
 import edu.mum.domain.Member;
+import edu.mum.service.MemberService;
 
 @Controller
-@RequestMapping({"/members"})
+@RequestMapping({ "/members" })
 public class MemberController {
-	
+
 	@Autowired
-	private MemberService  memberService;
+	private MemberService memberService;
 
 	@RequestMapping
 	public String listMembers(Model model) {
 		model.addAttribute("members", memberService.findAll());
 		return "members";
 	}
-	
-  	@RequestMapping("/{id}")
-	public String getMemberById(@PathVariable("id") Long id,Model model) {
+
+	@RequestMapping("/{id}")
+	public String getMemberById(@PathVariable("id") Long id, Model model) {
 		Member member = memberService.findOne(id);
 		model.addAttribute("member", member);
 
- 		return "member";
+		return "member";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewMemberForm(@ModelAttribute("newMember") Member newMember) {
-	   return "addMember";
+		return "addMember";
 	}
-	   
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String processAddNewMemberForm(@ModelAttribute("newMember") @Valid Member memberToBeAdded, BindingResult result) {
- 
-		if(result.hasErrors()) {
+	public String processAddNewMemberForm(@ModelAttribute("newMember") @Valid Member memberToBeAdded,
+			BindingResult result) {
+		if (result.hasErrors()) {
 			return "addMember";
 		}
 
-			 //  Error caught by ControllerAdvice IF no authorization...
-//		memberService.saveFull(memberToBeAdded);
+		// Error caught by ControllerAdvice IF no authorization...
+		// memberService.saveFull(memberToBeAdded);
 		memberService.save(memberToBeAdded);
 
-	   	return "redirect:/members";
- 
+		return "redirect:/members";
 	}
-	
- 
 }

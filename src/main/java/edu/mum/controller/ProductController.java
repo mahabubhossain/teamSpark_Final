@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import edu.mum.domain.Product;
 import edu.mum.service.ProductService;
@@ -19,17 +17,17 @@ import edu.mum.service.ProductService;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-	
+
 	@Autowired
 	private ProductService productService;
- 
- 	@RequestMapping({"","/all"})
+
+	@RequestMapping({ "", "/all" })
 	public String list(Model model) {
 		model.addAttribute("products", productService.findAll());
 		return "products";
 	}
-	
- 	@RequestMapping("/{id}")
+
+	@RequestMapping("/{id}")
 	public String getProductById(Model model, @PathVariable("id") Long productId) {
 
 		Product product = productService.findOne(productId);
@@ -37,27 +35,24 @@ public class ProductController {
 		return "product";
 	}
 
-	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewProductForm(@ModelAttribute("newProduct") Product newProduct) {
-	   return "addProduct";
+		return "addProduct";
 	}
-	   
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String processAddNewProductForm(@ModelAttribute("newProduct") @Valid Product productToBeAdded, BindingResult result) {
-		if(result.hasErrors()) {
+	public String processAddNewProductForm(@ModelAttribute("newProduct") @Valid Product productToBeAdded,
+			BindingResult result) {
+		if (result.hasErrors()) {
 			return "addProduct";
 		}
 
- //		try {
-			productService.addProduct(productToBeAdded);
-//		} catch (Exception up) {
-//	      System.out.println("Transaction Failed!!!");
- 
-	//	}
-		
-	   	return "redirect:/products";
+		// try {
+		productService.addProduct(productToBeAdded);
+		// } catch (Exception up) {
+		// System.out.println("Transaction Failed!!!");
+
+		// }
+		return "redirect:/products";
 	}
-	
-   
 }

@@ -19,16 +19,18 @@ public class UserCredentialsRestServiceImpl implements UserCredentialsRestServic
 
 	@Autowired
 	RestHttpHeader remoteApi;
-	
+
 	public List<UserCredentials> findAll() {
-		
+
 		RestTemplate restTemplate = remoteApi.getRestTemplate();
-		return Arrays.asList(restTemplate.exchange("http://localhost:8080/MemberRest/rest/members/", HttpMethod.GET, remoteApi.getHttpEntity(), UserCredentials[].class).getBody());
+		return Arrays.asList(restTemplate.exchange("http://localhost:8080/MemberRest/rest/members/", HttpMethod.GET,
+				remoteApi.getHttpEntity(), UserCredentials[].class).getBody());
 	}
 
 	public UserCredentials findOne(String index) {
 		RestTemplate restTemplate = remoteApi.getRestTemplate();
-		UserCredentials uc =  (restTemplate.exchange("http://localhost:8080/MemberRest/userCredentials/"+ index, HttpMethod.GET, remoteApi.getHttpEntity(), UserCredentials.class).getBody());
+		UserCredentials uc = (restTemplate.exchange("http://localhost:8080/MemberRest/userCredentials/" + index,
+				HttpMethod.GET, remoteApi.getHttpEntity(), UserCredentials.class).getBody());
 		return uc;
 	}
 
@@ -38,5 +40,4 @@ public class UserCredentialsRestServiceImpl implements UserCredentialsRestServic
 		restTemplate.postForObject("http://localhost:8080/JerseyRestSecurity/rest/members/", httpEntity, Product.class);
 		return null;
 	}
-
 }
